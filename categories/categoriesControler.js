@@ -14,17 +14,26 @@ categoryRouter.get("/admin/categories", (req, res) => {
   })
 })
 
-
-categoryRouter.get("/admin/categories/edit:id", (req, res) => { 
+categoryRouter.get("/admin/categories/edit/:id", (req, res) => {
   let id = req.params.id
 
-  categoryModel.findByPk(id)
-  .then(categoria => { 
-    if(categoria != undefined) { 
-      res.redirect('/admin/categories')
-    }
-  })
+
+  if(isNaN(id)) res.redirect("/admin/categories")
+
+  categoryModel
+    .findByPk(id)
+    .then((category) => {
+      if (category != undefined) {
+        res.render("admin/categories/edit", { category: category })
+      } else {
+        res.redirect("/admin/categories")
+      }
+    })
+    .catch((erro) => res.redirect("/admin/categories"))
 })
+
+
+// ! post routes
 
 categoryRouter.post("/categories/save", (req, res) => {
   let title = req.body.title
@@ -36,7 +45,7 @@ categoryRouter.post("/categories/save", (req, res) => {
         slug: slugify(title),
       })
       .then(() => {
-        res.redirect("/")
+        res.redirect("/admin/categories")
       })
     return
   }
@@ -63,6 +72,13 @@ categoryRouter.post("/categories/delete", (req, res) => {
   } else {
     res.redirect("/admin/categories")
   }
+})
+
+categoryRouter.post("/categories/update", (req, res) => { 
+  let id = req.body.id
+  let title = req.body.title
+
+  categoryModel.update({title: title, slug:slugify(title)}, {where:{id:id}}).then(() => res.redirect("/admin/categories"))
 })
 
 module.exports = categoryRouter
