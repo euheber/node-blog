@@ -1,9 +1,9 @@
 const { Router } = require("express");
-
+const articleModel = require("./Article")
 const articlesRoute = Router()
 
 articlesRoute.get("/articles", (req,res) => { 
-    res.send("Rota de artigos")
+    res.render("../views/admin/articles/newArticle")
 })
 
 module.exports = articlesRoute
