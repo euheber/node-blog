@@ -1,25 +1,23 @@
+const connection = require("../database/connection")
 const { Sequelize } = require("sequelize")
-const connect = require("../database/connection")
 const Category = require("../categories/Category")
 
-const Article = connect.define("Articles", {
+const Article = connection.define("Articles", {
   title: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  slug: {
-    type: Sequelize.STRING,
+  body: {
+    type: Sequelize.TEXT,
     allowNull: false,
   },
-  body: { 
-    type: Sequelize.TEXT,
-    allowNull: false
+  slug:{ 
+    type: Sequelize.STRING,
+    allowNull:false
   }
 })
 
-Category.hasMany(Article)
 Article.belongsTo(Category)
-
-
+Category.hasMany(Article)
 
 module.exports = Article

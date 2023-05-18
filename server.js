@@ -1,29 +1,26 @@
-const express = require("express")
-const app = express()
-const connection = require('./database/connection')
-
-const categoriesControler = require('./categories/categoriesControler')
-const Category = require("./categories/Category")
+const connection = require("./database/connection")
+const categoriesControler = require("./categories/categoriesControler")
 const articlesControler = require("./articles/articlesControler")
 const Article = require("./articles/Article")
+const Category = require("./categories/Category")
+const express = require('express')
+const app = express()
+const port = 3000
 
-app.set("view engine", "ejs")
-
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-app.use(express.static('public'))
 connection
 .authenticate()
-.then(() =>{ console.log('Banco de dados conectado');})
-.catch(error => { `opa, ${error}`})
+.then(() => console.log('Conexão com o servidor executada com sucesso'))
+.catch(err => console.log(err))
 
-app.use("", categoriesControler)
-app.use("", articlesControler)
+app.set('view engine', 'ejs')
 
-app.get("/", (req, res) => {
-  res.render("index")
-})
+app.use(express.static('public'))
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
 
-app.listen(3030, () => {
-  console.log("servidor rodando na porta 3030")
-})
+app.use("/", categoriesControler)
+app.use("/", articlesControler)
+
+
+app.get('/', (req, res) => res.render('index'))
+app.listen(port, () => console.log(`Servidor rodando na porta ${port}!`))

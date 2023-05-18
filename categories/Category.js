@@ -1,18 +1,17 @@
-const connection = require("../database/connection")
 const { Sequelize } = require("sequelize");
+const connection = require("../database/connection")
 
-const Category = connection.define('categories', { 
+
+const Category = connection.define('Categories', { 
     title: { 
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
     },
-    slug: {
+    slug: { 
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
     }
-        
 })
 
 
 module.exports = Category
-
