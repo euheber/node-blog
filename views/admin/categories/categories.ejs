@@ -5,7 +5,7 @@
     <%- include('../../partials/header') %>
     <main class="container">
       <h1 class="h2">Categorias</h1>
-      <a class="btn btn-primary mb-2" href="/admin/categories/new"
+      <a class="btn btn-primary mb-2" href="/admin/category/new"
         >Cadastrar categoria</a
       >
       <hr />
@@ -20,19 +20,27 @@
         </thead>
         <tbody>
         
+         <% categories.forEach(category => { %>
             <tr>
-              <td> </td>
-              <td></td>
-              <td></td>
               <td>
-                <a class="btn btn-warning" href="/admin/categories/edit">Editar</a>
+                <%= category.id %>
+              </td>
+              <td>
+                <%= category.title %>
+              </td>
+              <td>
+                <%= category.slug%>
+              </td>
+              <td>
+                <a class="btn btn-warning" href="/admin/categories/edit/<%= category.id%>">Editar</a>
    
-                <form  method="POST"  action="/categories/delete"class="d-inline" onsubmit="handleDeleteCategory(event, this)"> 
-                  <input type="hidden" name="id" value="" />
+                <form  method="POST"  action="/categories/delete" class="d-inline" onsubmit="handleDeleteCategory(event, this)"> 
+                  <input type="hidden" name="id" value="<%= category.id %>" />
                   <button class="btn btn-danger">Excluir</button>
                 </form>
               </td>
             </tr>
+         <% }) %>
        
           </tbody>
         </table>
@@ -43,7 +51,11 @@
       crossorigin="anonymous"
     ></script>
     <script>
-     
+     const handleDeleteCategory = (event, form) =>  { 
+      event.preventDefault()
+
+      confirm("Você tem certeza que deseja deletar esta categoria?") ? form.submit() : ''
+     }
     </script>
   </body>
 </html>
