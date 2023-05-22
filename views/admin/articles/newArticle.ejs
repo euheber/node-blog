@@ -3,21 +3,19 @@
   <%- include('../../partials/head') %>
   <body>
     <%- include('../../partials/header') %>
-    <main class="container">
+    <main class="container pb-5">
         <section class="card">
           <div class="card-header">
             <h1 class="h2">Novo artigo</h1>
           </div>
           <div class="card-body">
-            <form action="/articles/save" method="POST">
-              <input type="text"  class="form-control mb-3" name="title" placeholder="Título">
+            <form  method="POST" action="/articles/save">
+              <input type="text"  class="form-control mb-3" name="title" placeholder="Nome do artigo">
               <textarea name="body" class="form-control mb-3" id="article"></textarea>
               <label class="fs-1 mb-3">Categoria</label>
               <select name="category" class="form-control d-block mb-3">
                 <% categories.forEach(category => { %>
-                  <option value="<%= category.id %>">
-                    <%= category.title %>
-                  </option>
+                 <option value="<%= category.id %>"><%= category.title %></option>
                 <% }) %>
               </select>
               <button class="btn btn-success">Cadastrar</button>

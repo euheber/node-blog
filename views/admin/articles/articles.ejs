@@ -21,7 +21,20 @@
             </tr>
           </thead>
           <tbody>
-         
+              <% articles.forEach(article => { %>
+                <tr>
+                  <td><%= article.id %></td>
+                  <td><%= article.title %></td>
+                  <td><%= article.slug %></td>
+                  <td><%= article.Category.title %></td>
+                  <td>
+                    <form method="POST" action="/articles/delete"  onsubmit="handleArticleDelete(event, this)">
+                      <button class="btn btn-danger">Apagar</button>
+                      <input type="hidden" value="<%= article.id %>" name="id">
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
           </tbody>
         </table>
       </section>
@@ -31,5 +44,12 @@
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
+    <script>
+      const handleArticleDelete = (e, form) => { 
+        e.preventDefault()
+
+        confirm("Você quer deletar este artigo?") ? form.submit() : ""
+      }
+    </script>
   </body>
 </html>

@@ -22,6 +22,24 @@ app.use("/", categoriesControler)
 app.use("/", articlesControler)
 
 
-app.get('/', (req, res) => res.render('index'))
+app.get('/', (req, res) => {
+    Article.findAll().then( articles => { 
+        res.render('index', {articles})
+    })
+})
+
+app.get("/ler/:slug", (req, res) => {
+    const slug = req.params.slug
+
+    if(slug != undefined) {
+        Article.findOne({where: { 
+            slug:slug
+        }}).then(article => { 
+            res.render("admin/articles/article", {article})
+        })
+    } else { 
+        res.redirect("/index")
+    }
+})
 
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}!`))
