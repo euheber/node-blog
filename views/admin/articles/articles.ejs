@@ -27,11 +27,12 @@
                   <td><%= article.title %></td>
                   <td><%= article.slug %></td>
                   <td><%= article.Category.title %></td>
-                  <td>
+                  <td class="flex gap-2">
                     <form method="POST" action="/articles/delete"  onsubmit="handleArticleDelete(event, this)">
                       <button class="btn btn-danger">Apagar</button>
                       <input type="hidden" value="<%= article.id %>" name="id">
                     </form>
+                    <a href="/articles/edit/<%= article.id %>" class="btn btn-warning">Editar</a>
                   </td>
                 </tr>
               <% }) %>

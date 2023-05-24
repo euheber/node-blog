@@ -51,4 +51,19 @@ route.post("/articles/delete", (req, res) => {
   }
 })
 
+route.get("/articles/edit/:id", (req, res) => { 
+  const id = req.params.id
+  
+  Article.findOne({where: { 
+    id:id
+  }}).then(article => { 
+    res.render("admin/articles/edit", {article})
+  })
+})
+
+
+route.post("/article/update", (req, res) => { 
+  
+})
+
 module.exports = route
