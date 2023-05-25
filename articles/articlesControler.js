@@ -57,13 +57,19 @@ route.get("/articles/edit/:id", (req, res) => {
   Article.findOne({where: { 
     id:id
   }}).then(article => { 
-    res.render("admin/articles/edit", {article})
+    Category.findAll().then(categories => { 
+      res.render("admin/articles/edit", {article, categories})
+    })
   })
 })
 
 
 route.post("/article/update", (req, res) => { 
-  
+    const title = req.body.title
+    const body = req.body.body
+    const id = req.body.id
+    const category = req.body.category
+    Article.update({title: title, body:body, slug:slugify(title), CategoryId: category}, {where: {id: id}}).then(() => { res.redirect("/")})
 })
 
 module.exports = route

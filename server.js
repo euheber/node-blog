@@ -1,6 +1,7 @@
 const connection = require("./database/connection")
 const categoriesControler = require("./categories/categoriesControler")
 const articlesControler = require("./articles/articlesControler")
+const userControler = require("./Admin/userControler")
 const Article = require("./articles/Article")
 const Category = require("./categories/Category")
 const express = require("express")
@@ -20,6 +21,7 @@ app.use(express.json())
 
 app.use("/", categoriesControler)
 app.use("/", articlesControler)
+app.use("/", userControler)
 
 app.get("/", (req, res) => {
   Article.findAll().then((articles) => {
