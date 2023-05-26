@@ -8,7 +8,7 @@ route.get("/admin/users", (req, res) => {
 })
 
 route.get("/admin/create", (req, res) => { 
-    res.send("Criando usuários")
+    res.render("admin/create")
 })
 
 
