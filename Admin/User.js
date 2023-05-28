@@ -1,8 +1,6 @@
 const { Sequelize } = require("sequelize");
 const connection = require("../database/connection")
 
-
-
 const User = connection.define("Users", { 
     email:{
         type: Sequelize.STRING,
@@ -13,6 +11,7 @@ const User = connection.define("Users", {
         allowNull: false
     }
 }) 
+
 
 
 module.exports = User

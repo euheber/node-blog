@@ -2,6 +2,7 @@ const connection = require("./database/connection")
 const categoriesControler = require("./categories/categoriesControler")
 const articlesControler = require("./articles/articlesControler")
 const userControler = require("./Admin/userControler")
+const User = require("./Admin/User")
 const Article = require("./articles/Article")
 const Category = require("./categories/Category")
 const express = require("express")
@@ -45,7 +46,7 @@ app.get("/ler/:slug", (req, res) => {
       })
     })
   } else {
-    res.redirect("/index")
+    res.redirect("/")
   }
 })
 
