@@ -10,6 +10,11 @@ const express = require("express")
 const app = express()
 const port = 3000
 
+app.use(session({ 
+  secret: "seguranca",
+  cookie: {maxAge: 300000000}
+}))
+
 connection
   .authenticate()
   .then(() => console.log("Conexão com o servidor executada com sucesso"))
@@ -24,10 +29,6 @@ app.use(express.json())
 app.use("/", categoriesControler)
 app.use("/", articlesControler)
 app.use("/", userControler)
-app.use(session({ 
-  secret: "seguranca",
-  cookie: {maxAge: 30000}
-}))
 
 app.get("/", (req, res) => {
   Article.findAll().then((articles) => {
@@ -64,7 +65,7 @@ app.get("/category/:slug", (req, res) => {
     slug: slug
   }, include: [{model:Article}]}).then(category => { 
     if(category != undefined) { 
-      Category.findAll().then(categories => { 
+      Category.findAll().then(categories => {  
         res.render("index", {articles: category.Articles, categories})
       })
     } else { 
@@ -73,17 +74,4 @@ app.get("/category/:slug", (req, res) => {
   })
 })
 
-
-app.get("/session", (req, res) => { 
-    req.session.email = "euheber1@gmail.com"
-
-    res.send("Sessão feita")
-})
-
-
-app.get("/read", (req, res) => { 
-    res.json({
-     email: req.session.email
-    })
-})
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}!`))
